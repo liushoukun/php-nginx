@@ -8,14 +8,6 @@ WORKDIR /var/www/app
 COPY ./src/composer.json ./src/composer.lock* ./
 RUN composer install --no-scripts --no-autoloader --ansi --no-interaction --no-dev -vvv
 
-# add custom php-fpm pool settings, these get written at entrypoint startup
-ENV FPM_PM_MAX_CHILDREN=20 \
-    FPM_PM_START_SERVERS=2 \
-    FPM_PM_MIN_SPARE_SERVERS=1 \
-    FPM_PM_MAX_SPARE_SERVERS=3
-
-
-
 # copy entrypoint files
 #COPY ./docker/docker-php-* /usr/local/bin/
 #RUN dos2unix /usr/local/bin/docker-php-entrypoint
@@ -43,6 +35,16 @@ RUN composer dump-autoload -o \
 
 COPY docker/supervisord/supervisord.conf /etc/supervisord.conf
 COPY docker/supervisord/conf/*  /etc/supervisord/
+
+
+###########################################################################
+# Crontab
+###########################################################################
+
+
+COPY ./docker/crontab /etc/cron.d
+
+RUN chmod -R 644 /etc/cron.d
 
 EXPOSE 80
 

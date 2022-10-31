@@ -34,7 +34,7 @@ services:
             - TZ=UTC
         volumes:
             - ./docker/database/mysql:/var/lib/mysql
-            - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+            - ./docker/database/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
         ports:
             - "3306:3306"
         networks:
