@@ -8,14 +8,6 @@ WORKDIR /var/www/app
 COPY ./src/composer.json ./src/composer.lock* ./
 RUN composer install --no-scripts --no-autoloader --ansi --no-interaction --no-dev -vvv
 
-# copy entrypoint files
-#COPY ./docker/docker-php-* /usr/local/bin/
-#RUN dos2unix /usr/local/bin/docker-php-entrypoint
-#RUN dos2unix /usr/local/bin/docker-php-entrypoint-dev
-#
-#RUN  chmod 755 /usr/local/bin/docker-php-entrypoint \
-#    && chmod 755 /usr/local/bin/docker-php-entrypoint-dev
-
 # copy php config files
 COPY docker/php-fpm/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY docker/php-fpm/laravel.ini /usr/local/etc/php/conf.d
